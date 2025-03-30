@@ -12,8 +12,8 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["DotNet8WebAPI/DotNet8WebAPI.csproj", "DotNet8WebAPI/"]
-RUN dotnet restore "./DotNet8WebAPI/DotNet8WebAPI.csproj"
+COPY ["./DotNet8WebAPI/DotNet8WebAPI.csproj", "DotNet8WebAPI/"]
+RUN dotnet restore "DotNet8WebAPI/DotNet8WebAPI.csproj"
 COPY . .
 WORKDIR "/src/DotNet8WebAPI"
 RUN dotnet build "./DotNet8WebAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
@@ -28,3 +28,10 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "DotNet8WebAPI.dll"]
+
+#For browsing the api locally through docker
+#Open Docker Desktop locally
+#Open powershell on the path where the dockerfile exist
+#Run the command -  docker build -t donet8webapi .
+#then run the command  - docker run -p 8080:8080 donet8webapi
+#browse - http://192.168.1.4:8080/swagger/index.html in local browser
