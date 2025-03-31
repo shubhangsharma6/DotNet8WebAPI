@@ -8,6 +8,8 @@ namespace DotNet8WebAPI.Entity
         public AdvisorDbContext(DbContextOptions<AdvisorDbContext> options) : base(options) { }        
         public DbSet<Advisor> Advisors { get; set; }
 
+        public DbSet<InvestmentUser> InvestmentUser { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Advisor>().HasKey(x=>x.Id);
@@ -40,6 +42,16 @@ namespace DotNet8WebAPI.Entity
                     FirstName = "Dewang",
                     LastName = "Parashar",
                     IsActive = true
+                });
+
+            modelBuilder.Entity<InvestmentUser>().HasData(
+                new InvestmentUser()
+                {
+                    Id = 1,
+                    FirstName = "System",
+                    LastName = "",
+                    Username = "System",
+                    Password = "System",
                 });
         }
 
